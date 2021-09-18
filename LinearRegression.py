@@ -1,1 +1,3 @@
-import numpy as np
+import numpy
+import matplotlib
+import math
