@@ -1,7 +1,10 @@
+import math
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from scipy.stats import pearsonr
+from sklearn.preprocessing import PolynomialFeatures
 
 
 x = [0.024, 0.038, 0.04, 0.045, 0.047, 0.0578, 0.0629, 0.0629, 0.063, 0.064,
@@ -29,10 +32,49 @@ print('Рівняння лінійної залежності y = {} + {}x'.form
 print('Коефіцієнт детермінації, лінійної регресії: {}'.format(r_sq))
 
 
-linear_correlation = plt.figure(1)
-linear_correlation.scatter(x,y)
-plt.plot(x,y_pred)
-plt.show()
-# mean_x = np.mean(x)
-# mean_y = np.mean(y)
+# linear_correlation = plt.figure(1)
+# plt.scatter(x,y)
+# plt.plot(x,y_pred)
+# plt.show()
+
+
+x_ = PolynomialFeatures(degree=2,include_bias=False).fit_transform(x_np)
+
+model2 = LinearRegression().fit(x_,y_np)
+
+r_sq2 = model2.score(x_,y_np)
+
+b0 = model2.intercept_
+b1 = model2.coef_
+
+log_x_data = np.log(np.array(x))
+log_y_data = np.log(y_np)
+
+model3 = LinearRegression().fit(log_x_data.reshape(-1,1),y_np)
+
+print(model3.score(log_x_data.reshape(-1,1),y_np))
+print(model3.intercept_,model3.coef_)
+
+# curve_fit = np.polyfit(log_x_data,y_np,1)
+# print(curve_fit)
+
+# polynomial_correlation = plt.figure(2)
+# y_pred2 = model2.predict(x_)
+# plt.scatter(x,y)
+# plt.plot(x,y_pred2)
+# plt.show()
+
+
+
+
+# def logarithmic(x,y):
+#     sum_y = sum(y)
+#     sum_lnx2 = sum([math.log(xs,math.e) for xs in x])
+#     sum_lnx3 = sum([pow(math.log(xs,math.e),2) for xs in x])
+
+
+
+
+
+
 
